@@ -1,0 +1,106 @@
+#index_logo{
+	background-color:white;
+	color: black;
+	font-size:50px;
+	line-height:200px;
+	width:100%;
+	height:150px;
+}
+#account_block{
+	background-color:#AA0000;
+	height:50px;
+	font-size: 30px;
+	color:white;
+	font-family:Microsoft JhengHei;
+}
+.main{
+	width:1500px;
+	height:457px;
+	MARGIN-RIGHT: auto;
+	MARGIN-LEFT: auto;
+}
+#drama_list_div{
+	width:65%;
+	height:700px;
+	float:left;
+}
+#drama_list_ul{
+	list-style:none;
+}
+#drama_list_li{
+	border:1px #000000 solid;
+	width: 400px;
+	float:left;
+	font-family:Microsoft JhengHei;
+	font-size: 20px;
+}
+#drama_list_poster{
+	height: 190px;
+	width: 120px;
+	float:left;
+}
+#ranking_div{
+	width:35%;
+	height:400px;
+	float:right;
+}
+.drama_hyperlink{
+	color :black;
+	font-size: 30px;
+	font-family:Microsoft JhengHei;
+}
+.drama_hyperlink{
+	color :black;
+	font-size: 25px;
+	font-family:Microsoft JhengHei;
+}
+.drama_hyperlink:hover{
+	color :red;
+/*	font-size: 30px;
+	font-family:Microsoft JhengHei;*/
+}
+#page_div{
+	width:55%;
+	font-size: 25px;
+	float:left;
+	text-align: center;
+}
+.page_num{
+	padding:4px 8px;
+	width: 20px;
+	height: 20px;
+	border:2px solid #A42D00;
+}
+
+#search_form{
+	line-height:100px;
+	padding-left:40px;
+}
+#search_text{
+	width:712px;
+	height:40px;
+	border-width:2px;
+	border-color:#A42D00;
+	font-size:30px;
+}
+#search_submit{
+	font-size:20px;
+	width:80px;
+	height:40px;
+}
+#ad{
+	width:35%;
+	height:400px;
+	float:right;
+}
+
+
+a{
+	text-decoration:none;
+}
+
+/*drama_intro*/
+#dramaIntro_block{
+	font-size: 40px;
+	list-style:none;
+}
