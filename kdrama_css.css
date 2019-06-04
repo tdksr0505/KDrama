@@ -16,8 +16,7 @@
 .main{
 	width:1500px;
 	height:457px;
-	margin-right: auto;
-	margin-left: auto;
+	margin:auto;
 }
 #drama_list_div{
 	width:65%;
