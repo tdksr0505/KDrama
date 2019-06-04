@@ -1,5 +1,5 @@
 # KDrama
-### 練習寫一個韓劇評論的網站。
+### 後端為php韓劇評論的網站，順便練習使用jQuery。
 ### 首頁
 ![image](https://github.com/tdksr0505/KDrama/blob/master/pic/index.jpg)
 
