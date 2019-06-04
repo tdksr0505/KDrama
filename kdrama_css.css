@@ -104,3 +104,50 @@ a{
 	font-size: 40px;
 	list-style:none;
 }
+.commentBlock{
+	border-style:solid;
+	width:63%;
+	height:auto;
+	float:left;
+	margin:5px 0px;
+	padding:10px;
+	border-color: #A42D00;
+}
+.commentInput{
+	width:880px;
+	height:80px;
+	resize:none;
+	font-size: 25px;
+	margin:9px;
+	padding:10px;
+}
+
+.comment{
+	height:130px;
+	font-size: 25px;
+	margin:10px;
+	padding: 10px;
+}
+.commentId{
+	font-weight:bold;
+	display:block;
+}
+.commentText{
+	word-break: break-all; 
+	display: block;
+	height: 75px;
+}
+.commentTime{
+	font-size: 20px;
+	color:gray;
+	display: block;
+}
+.commentBtn{
+	width: 100%;
+	height: 80px;
+	font-size: 25px;
+	background-color: #A42D00;
+	color: white;
+	border:none;
+
+}

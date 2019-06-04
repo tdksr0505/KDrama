@@ -18,8 +18,6 @@
 		} 
 		else {
 			echo mysqli_error();
-		    echo "0 结果";
-		    echo $sql;
 		}
 		return $drama_data;
 	}
@@ -35,16 +33,16 @@
 	}
 	mysqli_set_charset($conn,'utf8');
 
-	//檢查session
+	//檢查登出
 	if(isset($_GET['r'])){
 		unset($_SESSION['user_account']);
 	}
 
 	if(isset($_SESSION['user_account'])){
-		$session = $_SESSION['user_account'];
+		$user_account = $_SESSION['user_account'];
 	}
 	else{
-		$session = "";
+		$user_account = "";
 	}
 
 	//drama information
@@ -58,6 +56,21 @@
 	//ranking
 	$sql = "SELECT * FROM drama ORDER BY score DESC LIMIT 5"; //從第0筆資料開始，抓6筆出來
 	$drama_data_ranking = dramaSqlQuery($conn, $sql);
+
+	//載入留言
+	$comment = array();
+	$sql = "SELECT u_account, word, date_time 
+			FROM comment
+			WHERE d_id = $d_id
+			ORDER BY c_id DESC";
+	$i = 0;
+	$result = $conn->query($sql);
+	while($row = mysqli_fetch_assoc($result)) {
+    	$comment[$i]['u_account'] = $row['u_account'];
+        $comment[$i]['word'] = $row['word'];
+        $comment[$i]['date_time'] = $row['date_time'];
+        $i++; 
+    }
 
 ?>
 <!DOCTYPE html>
@@ -78,7 +91,7 @@
 		<a href="member.php" target="_blank" style = "color: white">登入</a>&emsp;
 		<a href="member.php" target="_blank" style = "color: white">註冊</a>
 	</div>
-	<div id="index_logo">
+	<div id="index_logo" style="padding:5px;">
 		<a href="kdrama.php"><img src="src/logo.png" alt="連結失效" style="height: 150px;width: 332;float:left;"></a>
 	</div> 
 	<div style="background-color:#A42D00;width:100%;height:5px">
@@ -91,7 +104,7 @@
 	</div>
 	
 	<!-- 韓劇資訊 -->
-	<div style="width:65%;height:800px;float:left;">
+	<div style="width:63%;height:600px;float:left;border-style:solid;padding:10px;border-color:#A42D00;">
 		<div id = "poster_path">
 			<!-- <img  id = "poster" style="width: 400px;height: 600px;float:left;" src="src/poster/skycastle.jpg"> -->
 		</div>
@@ -130,6 +143,22 @@
 		</ol>
 
 	</div>
+	<!-- 留言區 -->
+	<div class="commentBlock">
+	<textarea class="commentInput" placeholder="新增留言..."></textarea>
+<!-- 	<hr size="1px" align="center" width="90%">
+	<div class="comment">
+		<span class="commentId">idddddd</span>
+		<span class="commentText">留言</span>
+		<span class="commentTime">2017/06/05 </span>
+	</div>
+	<hr size="1px" align="center" width="90%">
+	<div class="comment"></div>
+	<hr size="1px" align="center" width="90%">
+	<div class="comment"></div> -->
+	
+	</div>
+
 </div>
 </body>
 <script type="text/javascript">
@@ -207,30 +236,66 @@
 	    	div.appendChild(span);
 
 	    	a.innerHTML="登出";
-	    	a.setAttribute("href", "kdrama.php");
+	    	a.setAttribute("href", "drama_intro.php?id="+dramaInfo[0]['d_id']);
 	    	a.setAttribute("onclick", "javascript:logout()");
 	    	a.setAttribute("style", "color:white;float:right");
 	    	div.appendChild(a);
+	}
+
+	function logout(){
+		var httpRequest;
+		if (window.XMLHttpRequest) {
+			httpRequest = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+			httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 
-		function logout(){
-			var httpRequest;
-			if (window.XMLHttpRequest) {
-				httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function(){
+			if (httpRequest.readyState ==4 && httpRequest.status==200){
+				alert("已成功登出");
 			}
-			else if (window.ActiveXObject) {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-
-			httpRequest.onreadystatechange = function(){
-				if (httpRequest.readyState ==4 && httpRequest.status==200){
-					alert("已成功登出");
-				}
-			}
-			httpRequest.open("GET", "kdrama.php?r=logout");
-			httpRequest.send();
 		}
+		httpRequest.open("GET", "drama_intro.php?r=logout");
+		httpRequest.send();
+	}
+	function addComment(comments, start, end){
+ 		var i = 0;
+ 		var commentBlock = $(".commentBlock");
+ 		for(i=start;i<end && i<comments.length;i++){
+ 			var hr = $(document.createElement('hr'));
+ 			hr.attr("size", "1px");
+ 			hr.attr("align", "center");
+ 			hr.attr("width", "90%");
+ 			commentBlock.append(hr) ;
 
+ 			comment = createCommentDiv(comments[i]['u_account'], comments[i]['word'], comments[i]['date_time'])
+ 			commentBlock.append(comment);			
+ 		}
+ 		if(displayCommentEnd<comments.length){
+	    	var commentBtn = $(document.createElement('button'));
+	    	commentBtn.addClass("commentBtn");
+	    	commentBtn.html("顯示更多留言");
+	    	commentBtn.attr('class', 'commentBtn');
+	    	commentBtn.click(function(){
+	    		$(".commentBtn").remove()
+	    		displayCommentStart += 5;
+	    		displayCommentEnd += 5;
+	    		addComment(comments, displayCommentStart, displayCommentEnd);
+	    	});
+	    	$( ".commentBlock" ).append(commentBtn);
+	    }
+	}
+
+	function createCommentDiv(u_account, word, date_time){
+		var comment = document.createElement('div');
+		comment.classList.add("comment");
+
+		comment.innerHTML += "<span class = 'commentId'>"+u_account+"<span>";
+		comment.innerHTML += "<span class = 'commentText'>"+word+"<span>";
+		comment.innerHTML += "<span class = 'commentTime'>"+date_time+"<span>";
+		return comment;
+	}
     var i=0;	  
     var pic_index = 0;  
     setInterval("sequentialImg()",2000);
@@ -243,25 +308,24 @@
     //評分
     $('#star').jsRapStar({length:10,starHeight:64,colorBack:'gray',
 		onClick:function(score){
-			if(session!=""){
-				var httpRequest;
-				if (window.XMLHttpRequest) {
-					httpRequest = new XMLHttpRequest();
-				}
-				else if (window.ActiveXObject) {
-					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-
-				httpRequest.onreadystatechange = function(){
-					if (httpRequest.readyState ==4 && httpRequest.status==200){
-					document.getElementById("score").innerHTML=httpRequest.responseText;
-					dramaInfo[0]["scorepeople_count"]++;
-					document.getElementById("scorepeople_count").innerHTML="分("+dramaInfo[0]["scorepeople_count"]+"人評分)";
-					alert("已成功評分!");
-					}
-				}
-				httpRequest.open("GET", "score.php?score="+score+"&d_id="+dramaInfo[0]['d_id']);
-				httpRequest.send();
+			if(user_account!=""){
+				$.ajax({
+				    url: 'ScoreComment.php',
+				    type: 'GET',
+				    data: {
+				    	"score": score,
+				    	"d_id": dramaInfo[0]['d_id'],
+				    },
+				    error: function(xhr) {
+				      alert('發生錯誤');
+				    },
+				    success: function(response) {
+	    	 			document.getElementById("score").innerHTML=response;
+						dramaInfo[0]["scorepeople_count"]++;
+						document.getElementById("scorepeople_count").innerHTML="分("+dramaInfo[0]["scorepeople_count"]+"人評分)";
+						alert("已成功評分!");
+				    }
+			  	});
 			}
 			else{
 				alert("請先登入再評分!");
@@ -269,9 +333,58 @@
 		}
 	});
 
-    var session = "<?php echo $session ?>";
-    if(session!=""){
-    	addAccountInfo("account_block", session);
+
+
+    var user_account = "<?php echo $user_account ?>";
+    if(user_account!=""){
+    	addAccountInfo("account_block", user_account);
     }
+
+    $( ".commentInput" ).focus(function() {
+  		$(".commentInput").val("");
+	});
+    //偵測輸入留言
+    $(".commentInput").on('keypress',function(e) {
+	    if(e.which == 13) {
+	    	if(!event.shiftKey){
+	    		if($(".commentInput").val()=="") return false; //輸入欄位為空白
+	    		if(user_account!=""){
+					$.ajax({
+					    url: 'ScoreComment.php',
+					    type: 'GET',
+					    data: {
+					    	"u_account": user_account,
+					    	"d_id": dramaInfo[0]['d_id'],
+					    	"text": $(this).val(),
+					    	"time": new Date().toLocaleString()
+					    },
+					    error: function(xhr) {
+					      alert('發生錯誤');
+					    },
+					    success: function(response) {
+		    	 			var hr = $(document.createElement('hr'));
+				 			hr.attr("size", "1px");
+				 			hr.attr("align", "center");
+				 			hr.attr("width", "90%");
+				 			var comment = createCommentDiv(user_account, $(".commentInput").val(), new Date().toLocaleString());
+					    	$( ".commentInput" ).after(comment);
+					    	$( ".commentInput" ).after(hr);
+					    	$(".commentInput").val("");
+					    }
+				  	});
+				}
+				else{
+					alert("請先登入再評分!");
+				}    	
+	    	}
+	    }
+	});
+
+    var comments = <?php echo json_encode($comment); ?>;
+    var commentsCount = comments.length;
+    var displayCommentStart = 0;
+    var displayCommentEnd = 5;
+    addComment(comments, displayCommentStart, displayCommentEnd);
+
 </script>
 </html>

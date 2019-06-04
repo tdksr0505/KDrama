@@ -82,6 +82,8 @@
   		left: 100px;
 	    text-align: center;
 	    font-weight:bold;
+	    margin:15px;
+
 	}
 
 	#sinInBlock {
@@ -95,6 +97,7 @@
 	    left: 800px;   
 	    text-align: center;
 	    font-weight:bold;
+	    margin:15px;
 	}
 
 	.inputFont {

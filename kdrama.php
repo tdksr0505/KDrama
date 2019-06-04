@@ -116,7 +116,7 @@
 <!-- 		<span>您好: 111</span>
 		<a href="member.php" style ="color:white;float:right">登出</a> -->
 	</div>
-	<div id="index_logo">
+	<div id="index_logo" style="padding:5px;">
 		<a href="kdrama.php"><img src="src/logo.png" alt="連結失效" style="height: 150px;width: 332;float:left;"></a>
 	</div>
 	<div style="background-color:#A42D00;width:100%;height:5px">
