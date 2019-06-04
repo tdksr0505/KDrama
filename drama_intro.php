@@ -158,7 +158,7 @@
 	<div class="comment"></div> -->
 	
 	</div>
-
+	<div class="footer">建議使用chrome瀏覽器瀏覽此網頁</div>
 </div>
 </body>
 <script type="text/javascript">
@@ -217,12 +217,14 @@
 			a.className = "drama_hyperlink";
 			ol.appendChild(a);
 
-    		var hr = document.createElement("hr");
-			hr.setAttribute("color", "#A42D00");
-			hr.setAttribute("size", "2");
-			hr.setAttribute("align", "left");
-			hr.setAttribute("width", "70%");
-			ol.appendChild(hr);
+    		if(i < drama_data_ranking.length-1){
+				var hr = document.createElement("hr");
+				hr.setAttribute("color", "#A42D00");
+				hr.setAttribute("size", "2");
+				hr.setAttribute("align", "left");
+				hr.setAttribute("width", "70%");
+				ol.appendChild(hr);
+			}
     	}
     }
 

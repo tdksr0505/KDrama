@@ -16,8 +16,8 @@
 .main{
 	width:1500px;
 	height:457px;
-	MARGIN-RIGHT: auto;
-	MARGIN-LEFT: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 #drama_list_div{
 	width:65%;
@@ -151,3 +151,15 @@ a{
 	border:none;
 
 }
+.footer{
+	text-align:center;
+	background-color: #AAAAAA;
+	font-size: 20px;
+	height:100px;
+	width: 100%;
+	line-height:100px;
+	border-top-style:solid;
+	border-color: #A42D00;
+    clear: left;
+}
+
