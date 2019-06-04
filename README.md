@@ -9,5 +9,5 @@
 ## 利用ajax做評分及留言功能
 ![image](https://github.com/tdksr0505/KDrama/blob/master/pic/3.jpg)
 
-### 若留言數太多，動態載入留言
+## 若留言數太多，動態載入留言
 ![image](https://github.com/tdksr0505/KDrama/blob/master/pic/2.JPG)
