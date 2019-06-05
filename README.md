@@ -1,5 +1,5 @@
 # KDrama
-### 後端為php韓劇評論的網站，順便練習使用jQuery。
+### 後端為php的韓劇評論網站。
 ### 首頁
 
 <img src="https://github.com/tdksr0505/KDrama/blob/master/tmp/index.JPG" width = "50%" height = "50%" />
